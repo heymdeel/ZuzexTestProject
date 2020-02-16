@@ -79,24 +79,16 @@ namespace ZuzexTestProject.Infrastructure.Services
 
             if (post == null)
             {
-                post = mapper.Map<Post>(postDTO);
-                post.DatePosted = DateTime.Now;
-
-                context.Posts.Add(post);
-
-                await context.SaveChangesAsync();
+                throw new NotFoundException(ErrorCode.ResourceNotFound, "post was not found");
             }
-            else
-            {
-                post.Annotation = postDTO.Annotation;
-                post.Content = postDTO.Content;
-                post.Title = postDTO.Title;
-                post.DateRefreshed = DateTime.Now;
 
-                context.Entry(post).State = EntityState.Modified;
-
-                await context.SaveChangesAsync();
-            }
+            post.Annotation = postDTO.Annotation;
+            post.Content = postDTO.Content;
+            post.Title = postDTO.Title;
+            post.DateRefreshed = DateTime.Now;
+            context.Entry(post).State = EntityState.Modified;
+            
+            await context.SaveChangesAsync();
         }
     }
 }
