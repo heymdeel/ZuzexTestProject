@@ -29,9 +29,9 @@ namespace ZuzexTestProject.UI.Controllers
         // GET: api/posts
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<PostsListVM>), 200)]
-        public async Task<ActionResult<IEnumerable<PostsListVM>>> GetPosts()
+        public async Task<ActionResult<IEnumerable<PostsListVM>>> GetPosts([FromQuery]int? offset, [FromQuery]int? limit)
         {
-            var posts = await postsService.GetAllPostsAsync();
+            var posts = await postsService.GetAllPostsAsync(offset, limit);
             var postsVM = mapper.Map<IEnumerable<PostsListVM>>(posts);
 
             return Ok(postsVM);

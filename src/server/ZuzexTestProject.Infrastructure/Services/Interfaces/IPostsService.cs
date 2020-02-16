@@ -9,7 +9,7 @@ namespace ZuzexTestProject.Infrastructure.Services
 {
     public interface IPostsService
     {
-        Task<IEnumerable<Post>> GetAllPostsAsync();
+        Task<IEnumerable<Post>> GetAllPostsAsync(int? offset, int? limit);
 
         Task<Post> GetPostDetailAsync(int id);
 

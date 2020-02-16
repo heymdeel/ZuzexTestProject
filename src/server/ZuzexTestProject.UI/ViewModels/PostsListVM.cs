@@ -19,8 +19,5 @@ namespace ZuzexTestProject.UI.ViewModels
 
         [JsonPropertyName("date_posted")]
         public DateTime DatePosted { get; set; }
-
-        [JsonPropertyName("date_refreshed")]
-        public DateTime? DateRefreshed { get; set; }
     }
 }

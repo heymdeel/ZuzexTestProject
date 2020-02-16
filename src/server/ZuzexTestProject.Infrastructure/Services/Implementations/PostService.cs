@@ -34,19 +34,29 @@ namespace ZuzexTestProject.Infrastructure.Services
             return post;
         }
 
-        public async Task<IEnumerable<Post>> GetAllPostsAsync()
+        public async Task<IEnumerable<Post>> GetAllPostsAsync(int? offset, int? limit)
         {
-            var posts = await context.Posts
-                                     .Select(p => new Post
-                                     {
-                                         ID = p.ID,
-                                         Title = p.Title,
-                                         Annotation = p.Annotation,
-                                         DatePosted = p.DatePosted,
-                                         DateRefreshed = p.DateRefreshed
-                                     }).ToListAsync();
+            var query = context.Posts.AsQueryable();
+            if (offset.HasValue)
+            {
+                query = query.Skip(offset.Value);
+            }
 
-            return posts;
+            if (limit.HasValue)
+            {
+                query = query.Take(limit.Value);
+            }
+
+            query = query.Select(p => new Post
+            {
+                ID = p.ID,
+                Title = p.Title,
+                Annotation = p.Annotation,
+                DatePosted = p.DatePosted,
+                DateRefreshed = p.DateRefreshed
+            });
+
+            return await query.ToListAsync();
         }
 
         public async Task<Post> GetPostDetailAsync(int id)
